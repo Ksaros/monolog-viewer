@@ -1,5 +1,7 @@
 FROM php:7.0-apache
 
+ADD web/000-default.conf /etc/apache2/sites-available/000-default.conf
+
 RUN apt-get update && \
     apt-get install -y zlib1g-dev libicu-dev g++ libxml2-dev zip unzip curl git
 
@@ -14,6 +16,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 
 RUN a2enmod rewrite && service apache2 restart
 
-RUN composer create-project syonix/monolog-viewer /var/www/html
+RUN git clone https://github.com/Syonix/monolog-viewer.git /var/www/html
+RUN cd /var/www/html && composer install
 
 RUN chown -R www-data:www-data /var/www/html
