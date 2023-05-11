@@ -63,6 +63,7 @@ controllers.controller('LogFileController', ['$scope', '$http', '$routeParams', 
                 .then(function successCallback(response) {
                     $scope.$parent.currentLog = response.data;
                     $scope.$parent.busySearch = false;
+                    $scope.busy = false;
                     $scope.scrollTop();
                     initTooltips();
                 }, function errorCallback() {
