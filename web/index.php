@@ -10,6 +10,7 @@ define('PASSWD_FILE', PASSWD_DIR.'/passwd');
 define('VENDOR_PATH', APP_ROOT.'/vendor');
 define('BASE_URL', ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http').
     '://'.$_SERVER['SERVER_NAME'].
+    ':'.((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] !== '80') ? $_SERVER['SERVER_PORT'] : '').
     str_replace('/index.php', '', $_SERVER['SCRIPT_NAME'])
 );
 
