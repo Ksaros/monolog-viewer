@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+      monolog-viewer:
+            build: ./
+            restart: unless-stopped
+            volumes:
+                  - ${PWD}/:/var/www/html:delegated
+            ports:
+                  - 8095:80
