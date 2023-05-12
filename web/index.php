@@ -19,6 +19,29 @@ $app['template_url'] = BASE_URL;
 
 if (is_readable(CONFIG_FILE)) {
     $app->register(new DerAlex\Silex\YamlConfigServiceProvider(CONFIG_FILE));
+
+    $config = $app->offsetGet('config');
+    foreach ($config['logs'] as $domainName => $domain) {
+        foreach ($domain as $logName => $log) {
+            $offset = strpos($log['path'], '<<date>>');
+            if ($offset !== false) {
+                $rootDir = substr($log['path'], 0, $offset);
+                $fileDir = substr($log['path'], $offset + 8);
+                $childDirs = scandir($rootDir);
+                foreach ($childDirs as $dirName) {
+                    if (DateTime::createFromFormat('Y-m-d', $dirName) !== false) {
+                        $newLogName = sprintf('%s-%s', $logName, $dirName);
+                        $config['logs'][$domainName][$newLogName] = $log;
+                        $config['logs'][$domainName][$newLogName]['path'] = sprintf('%s%s%s', $rootDir, $dirName, $fileDir);
+                    }
+                }
+
+                unset($config['logs'][$domainName][$logName]);
+            }
+        }
+    }
+
+    $app->offsetSet('config', $config);
     $app['debug'] = ($app['config']['debug']);
     Symfony\Component\Debug\ExceptionHandler::register(!$app['debug']);
     if (in_array($app['config']['timezone'], DateTimeZone::listIdentifiers())) {
