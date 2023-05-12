@@ -84,7 +84,7 @@ Accesses log files on the server's local file system.
 
 | Config values | Description                                                                                                                                                                                                                                                       |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `path`      | The absolute file path. (You can use PHP's `realpath()` to get the absolute path of a file.) In addition if you pass <`<date>`> as dir name in path it will search in its parrent for all dirs that are date named in format Y-m-d (see example config file). |
+| `path`      | The absolute file path. (You can use PHP's `realpath()` to get the absolute path of a file.) In addition if you pass `<<date>>` as dir name in path it will search in its parrent for all dirs that are date named in format Y-m-d (see example config file). |
 
 ##### `ftp`
 
